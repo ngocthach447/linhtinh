@@ -54,6 +54,7 @@ async function GetRoleUser(userName) {
 
 async function GetInfoByUser(userName) {
     console.clear();
+    showAwaitUpdate('Get Info User ' + userName);
     console.log('%cList User Role', 'color: #bada55');
 
     // Lấy thông tin user
@@ -75,6 +76,7 @@ async function GetInfoByUser(userName) {
         .catch(error => console.log(error));
     if (PermissionApps.code != 200) {
         console.log("Error!:", permissionAppId);
+        showNotification(2, "Error!:"+  permissionAppId)
         return;
     }
     var listRole = await GetRoleUser(userName);
@@ -95,6 +97,7 @@ async function GetInfoByUser(userName) {
             }
         }
     }
+    showNotification(0, '  F12 => INFO ');
 }
 
 async function GetUserByEmail(userName) {
