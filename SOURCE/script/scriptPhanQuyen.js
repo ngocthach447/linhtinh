@@ -9,8 +9,6 @@ var permissionAppId = '';
 var createBy = 'BOT-IDC';
 var appCode = 'FTIIDC';
 var appId = 46; // Mã ứng dụng IDC = 46
-//  ++
-
 
 // 0: FunctionId, 1: IdRole(permissionAppId), 2: AppCode, 3: CreateBy , 4: "viewActionId":46 , 5: "updateActionId":26
 var strRequestData = '{"lstPermissionFunction":[{"functionId":"{0}","permissionAppId":"{1}","appCode":"{2}","isAccess":"1","createBy":"{3}","viewActionId":{4},"createActionId":0,"updateActionId":{5},"deleteActionId":0,"importActionId":0,"exportActionId":0}]}';
