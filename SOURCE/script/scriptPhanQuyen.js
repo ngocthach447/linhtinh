@@ -20,8 +20,7 @@ var strRoleUser = '{"lstRoleUsers":[{"id":0,"roleCode":"{0}","userName":"{1}","i
 async function AddRoleUser(roleCode, userName) {
     input = strRoleUser.f(roleCode, userName, createBy);
     var result = await callAjax('POST', '/api/user/v1/User/AddRoleUsers_v2', input, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+        .then(res => { return setDefaultIsNull(res);});   
 
     if (result.code != 200) {
         console.log("Error!:", functionId, result.code, result.message);
@@ -38,8 +37,7 @@ async function GetRoleUser(userName) {
         PageNumber: 1
     };
     var result = await callAjax('GET', '/api/user/v1/User/GetUserRoleByEmail', input, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+          .then(res => { return setDefaultIsNull(res);});       
 
     if (result.code != 200) {
         console.log("Error!:", userName);
@@ -69,8 +67,7 @@ async function GetInfoByUser(userName) {
         PageNumber: 1
     };
     var PermissionApps = await callAjax('POST', '/api/user/v1/permissionapp/GetPermissionApps', JSON.stringify(input), strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
     if (PermissionApps.code != 200) {
         console.log("Error!:", permissionAppId);
         showNotification(2, "Error!:" + permissionAppId);
@@ -107,8 +104,7 @@ async function GetUserByEmail(userName) {
         PageNumber: 1
     };
     var result = await callAjax('GET', '/api/user/v1/User/Find', input, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
     if (result.code != 200) {
         console.log("Error!:", 'GetUserByEmail');
     }
@@ -125,8 +121,7 @@ async function DelRoleUser(idRole, userName) {
         Code: userName
     };
     var result = await callAjax('DELETE', '/api/user/v1/roleuser/Delete_v2', input, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
 
     if (result.code != 200) {
         console.log("Error!:", userName, result.message);
@@ -143,8 +138,7 @@ async function ConfirmPermissionbyID() {
         PageNumber: 1
     };
     var result = await callAjax('POST', '/api/user/v1/permissionapp/GetPermissionApps', JSON.stringify(input), strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
     if (result.code != 200) {
         console.log("Error!:", permissionAppId);
     }
@@ -171,8 +165,7 @@ async function AddFunction(strInput) {
     input = strFunction.f(strInput.isEnable, strInput.code, strInput.displayName, strInput.path, strInput.orders,
         strInput.parentCode, appCode, createBy);
     var result = await callAjax('POST', '/api/user/v1/function/Post', input, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
 
     if (result.code != 200) {
         console.log("Error!:", functionId, result.code, result.message);
@@ -216,9 +209,8 @@ async function UpdateMenu(isShow = 0) {
     for (var v of listMenu) {
 
         var id = { id: v.ID }
-        var result = await callAjax('GET', '/api/user/v1/function/GetById', id, strBearer).then(res => {
-            return res;
-        }).catch(error => console.log(error));
+        var result = await callAjax('GET', '/api/user/v1/function/GetById', id, strBearer)
+        .then(res => { return setDefaultIsNull(res);});   
 
         if (result.code != 200) {
             console.log("Error!!! : ", v.ID, v.displayName);
@@ -231,9 +223,8 @@ async function UpdateMenu(isShow = 0) {
             inputMenu.updateBy = createBy;
             inputMenu.displayName = v.displayName;
             var input = JSON.stringify(inputMenu);
-            var resultPut = await callAjax('PUT', '/api/user/v1/function/Put', input, strBearer).then(res => {
-                return res;
-            }).catch(error => console.log(error));
+            var resultPut = await callAjax('PUT', '/api/user/v1/function/Put', input, strBearer)
+            .then(res => { return setDefaultIsNull(res);});   
             if (resultPut.code != 200) {
                 console.log("Error Put !!! : ", v.ID, v.displayName);
                 break;
@@ -256,8 +247,7 @@ async function getFunctions(filter = '') {
     };
     listfunc = '';
     var result = await callAjax('GET', '/api/user/v1/function/Find', input, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
 
     if (result.code != 200) {
         console.log("Error:", result.code, result.message);
@@ -285,8 +275,7 @@ async function delAllFuntionbyAppcode() {
 // xóa 1 quyền theo ID
 async function delFunction(functionId) {
     var result = await callAjax('DELETE', '/api/user/v1/function/Delete?Id={0}'.f(functionId), null, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
 
     if (result.code != 200) {
         console.log("Error!:", functionId, result.code, result.message);
@@ -300,8 +289,7 @@ async function delFunction(functionId) {
 async function getPermissionFunctions(_permissionAppId = 0) {    //permissionAppId khai báo ở trên.
     input = strGetPerFunctions.f(appId, _permissionAppId ?? permissionAppId);
     var result = await callAjax('POST', '/api/user/v1/permissionfunction/GetPermissionFunctions', input, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
     return result.data;
 };
 async function runPermission(action = 0) {    //action = 0 : View, 1: View + Update
@@ -314,8 +302,7 @@ async function runPermission(action = 0) {    //action = 0 : View, 1: View + Upd
             perOld = p.functionCode;
             input = strRequestData.f(p.functionId, permissionAppId, appCode, createBy, 46, action == 1 ? 26 : 0);
             var result = await callAjax('POST', '/api/user/v1/permissionfunction/AddPermissionFunctions', input, strBearer)
-                .then(res => { return res; })
-                .catch(error => console.log(error));
+            .then(res => { return setDefaultIsNull(res);});   
             if (result.code != 200) {
                 console.log("Error!!! : ", v.ID, v.displayName);
                 break;
@@ -365,8 +352,7 @@ async function delAllPermissionByRole(type = 0, strfilter = '') {
 // xóa 1 quyền theo ID
 async function delPermission(perId) {
     var result = await callAjax('DELETE', '/api/user/v1/permissionfunction/Delete?Id={0}'.f(perId), null, strBearer)
-        .then(res => { return res; })
-        .catch(error => console.log(error));
+    .then(res => { return setDefaultIsNull(res);});   
 
     if (result.code != 200) {
         console.log("Error!:", perId, result.code, result.message);
@@ -402,9 +388,11 @@ function PostPromise(url, input = null, strAuthor = '') {
                 resolve(data)
             },
             failure: function (data) {
+                showNotification(2,data.status);
                 reject(data)
             },
             error: function (data) {
+                showNotification(2,data.status);
                 reject(data)
             }
         };
@@ -426,9 +414,11 @@ function GetPromise(url, input = null, strAuthor = '') {
                 resolve(data)
             },
             failure: function (data) {
+                showNotification(2,data.status);
                 reject(data)
             },
-            error: function (data) {
+            error: function (data) {                
+                showNotification(2,data.status);
                 reject(data)
             }
         });
@@ -450,9 +440,11 @@ function PutPromise(url, input = null, strAuthor = '') {
                 resolve(data)
             },
             failure: function (data) {
+                showNotification(2,data.status);
                 reject(data)
             },
             error: function (data) {
+                showNotification(2,data.status);
                 reject(data)
             }
         });
@@ -473,9 +465,11 @@ function DeletePromise(url, input = null, strAuthor = '') {
                 resolve(data)
             },
             failure: function (data) {
+                showNotification(2,data.status);
                 reject(data)
             },
             error: function (data) {
+                showNotification(2,data.status);
                 reject(data)
             }
         });
